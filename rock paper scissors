@@ -1,0 +1,67 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int main()
+{
+    int player, computer;
+    float playerscore = 0, compscore = 0;
+    const char *choice[] = {"rock", "paper", "scissors"};
+    char name[50];
+
+    srand(time(NULL));
+
+    printf("You are now playing Rock, Paper, Scissors!\n");
+    printf("Enter player name: ");
+    scanf("%s", name);
+
+    printf("You will be playing against the computer.\n");
+
+    for (int i = 1; i <= 3; i++)
+    {
+        printf("\n--- Round %d ---\n", i);
+        printf("Enter your choice:\n0 = rock, 1 = paper, 2 = scissors\n");
+        scanf("%d", &player);
+
+        if (player < 0 || player > 2)
+        {
+            printf("Invalid choice, try again.\n");
+            i--;
+            continue;
+        }
+
+        computer = rand() % 3;
+        printf("Computer chose: %s\n", choice[computer]);
+        printf("%s chose: %s\n", name, choice[player]);
+
+        if (player == computer)
+        {
+            printf("It's a draw!\n");
+            playerscore += 0.5;
+            compscore += 0.5;
+        }
+        else if ((player == 0 && computer == 2) || (player == 1 && computer == 0) || (player == 2 && computer == 1))
+        {
+            printf("%s wins this round!\n", name);
+            playerscore += 1;
+        }
+        else
+        {
+            printf("Computer wins this round!\n");
+            compscore += 1;
+        }
+    }
+
+    printf("\n--- Final Results ---\n");
+    printf("%s's points: %.1f\n", name, playerscore);
+    printf("Computer's points: %.1f\n", compscore);
+
+    if (playerscore > compscore)
+        printf("\n🎉 %s wins the game!\n", name);
+    else if (playerscore < compscore)
+        printf("\n💻 Computer wins the game!\n");
+    else
+        printf("\n🤝 It's a tie!\n");
+
+    return 0;
+}
